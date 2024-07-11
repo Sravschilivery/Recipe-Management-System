@@ -3,6 +3,12 @@ session_start(); // Start the session
 
 $errors = [];
 
+// Check for logout success message
+$logout_message = '';
+if (isset($_GET['logout']) && $_GET['logout'] === 'success') {
+    $logout_message = "<div class='alert alert-success'>You have successfully logged out.</div>";
+}
+
 // Check if the form is submitted
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Perform validation
@@ -72,6 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="contact-form">
                 <form method="post">
                     <?php
+                    // Display logout success message
+                    if ($logout_message) {
+                        echo $logout_message;
+                    }
+                    
                     // Display errors, if any
                     if (!empty($errors)) {
                         foreach ($errors as $error) {
@@ -83,7 +94,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <input type="text" name="name" id="name" required>
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" required>
-                    <button type="submit">Login</button>
+                    <div class="container">
+                      <div class="row">
+                          <div class="col-6"><button type="submit" class="btn btn-primary">Login</button></div>
+                          <div class="col-6"><div class="button"><a href="register.php" class="btn btn-secondary">Register</a></div></div>
+                      </div>
+                      <a href="index.php" style="color: white;">Back to home</a>
+                  </div>
                 </form>
             </div>
         </div>

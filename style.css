@@ -145,7 +145,7 @@
 /*Recipe Section CSS*/
 .recipe{
     width: 100%;
-    padding: 100px 0px;
+    padding: 20px 0px;
     background-color: #213032;
 }
 .recipe h2{
@@ -156,6 +156,7 @@
     margin-bottom: 20px;
     text-align: center;
 }
+
 .box{
     display: flex;
     flex-wrap: wrap;
@@ -220,7 +221,7 @@
     cursor: pointer;
  }
  /*Categories*/
- .categories{
+ /* .categories{
     width: 100%;
     padding: 100px 0px;
     background-color: #314e52;
@@ -288,7 +289,7 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
+} */
 /*Contact form*/
 .contact{
     display: flex;

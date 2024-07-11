@@ -39,9 +39,7 @@
             <h3>Elevate Your Cooking Game</h3>
             <div class="button"><a href="recipe.php" style="color: white";>Explore Recipes</a></div>
         </div>
-        <div class="fixed">
-            <i class="bi bi-plus-circle fs-3"><a href="create.html" style="color: white";><b>Add</b></a></i>
-        </div>
+        
     </div>
     <footer>
         <div class="social-icons">

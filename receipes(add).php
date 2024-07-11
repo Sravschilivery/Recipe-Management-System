@@ -1,40 +1,40 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header('Location: login.php');
+    exit();
+}
+
+// Database connection
+$host = 'localhost';
+$db = 'mydatabase';
+$user = 'root';
+$pass = '';
+
+$conn = new mysqli($host, $user, $pass, $db);
+
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $name = $_POST['name'];
-    $image_url = $_POST['image']; // Assuming 'image' is the name of the input field for image URL
+    $image = $_POST['image'];
     $description = $_POST['description'];
     $ingredients = $_POST['ingredients'];
     $instructions = $_POST['instructions'];
-    $id = isset($_POST['id']) ? intval($_POST['id']) : 0; // Ensure 'id' is an integer
 
-    // Database connection
-    $servername = "localhost";
-    $username = "root";
-    $password = ""; 
-    $dbname = "mydatabase";
+    $stmt = $conn->prepare('INSERT INTO recipes (name, image, description, ingredients, instructions) VALUES (?, ?, ?, ?, ?)');
+    $stmt->bind_param('sssss', $name, $image, $description, $ingredients, $instructions);
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
-    // Prepare SQL query
-    if ($id > 0) {
-        // Update existing recipe with image URL
-        $sql = "UPDATE receipes SET name='$name', image='$image_url', description='$description', ingredients='$ingredients', instructions='$instructions' WHERE id=$id";
+    if ($stmt->execute()) {
+        header('Location: recipe.php');
     } else {
-        // Insert new recipe with image URL
-        $sql = "INSERT INTO receipes (name, image, description, ingredients, instructions) VALUES ('$name', '$image_url', '$description', '$ingredients', '$instructions')";
+        echo "Error: " . $stmt->error;
     }
 
-    // Execute SQL query
-    if ($conn->query($sql) === TRUE) {
-        echo "<script>alert('Recipe saved successfully!'); window.location.href='recipe.php';</script>";
-    } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
-    }
-
-    $conn->close();
+    $stmt->close();
 }
+
+$conn->close();
 ?>
